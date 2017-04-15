@@ -1,0 +1,88 @@
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+<script src="js/application.js"></script>
+
+<!-- blog body -->
+<div class = "body container-fluid">
+  <!-- row 1 -->
+  <div class = "row">
+  <!-- main blog post -->
+    <div class = "blog-section-main col-xs-12 col-sm-12 col-md-8">
+      <!-- blog image -->
+      <%= image_tag(Post.last.image, class: "blog-img")  %>
+        <!-- heart -->
+        <div class = "heart">
+          <i class="fa fa-heart-o fa-2x" aria-hidden="true"></i>
+          <span class = "likes">456</span>
+        </div>
+        <!-- bookmark -->
+        <div class = "bookmark">
+          <i class="fa fa-bookmark-o fa-2x" aria-hidden="true"></i>
+        </div>
+        <div style="clear: both;"></div>
+      <!-- post title -->
+      <h3> <%= link_to Post.last.title, post_path(Post.last) %> </h3>
+      <!-- post body -->
+      <p> <%= Post.last.body.split.first(100).join(" ") + "..." %> </p>
+      <!-- post author -->
+      <h5 class = "author"><%= Post.last.author.name %></h5>
+      <!-- post date -->
+      <h5> <%= Post.last.created_at %> </h5>
+    </div>
+
+    <!-- side bar -->
+    <div class="sidebar hidden-xs hidden-sm col-md-4">
+      <nav class="navi flex-column">
+        <span class="sidebar-title">Most Liked</span><p>
+        </br>
+        <a class="nav-link active" href="#">The Worst Advice We've Ever Heard</a><p>
+        <a class="nav-link" href="#">Think You're Cut Out For Doing Design?</a><p>
+        <a class="nav-link" href="#">How to Solve the Biggest Problems</a><p>
+        <a class="nav-link" href="#">10 Things Your Competitors Can Teach</a><p>
+        <a class="nav-link" href="#">14 Common Misconceptions About</a><p>
+        <a class="nav-link" href="#">The History of Design</a><p>
+        <a class="nav-link" href="#">10 Signs You Should Invest In Tech</a><p>
+        <a class="nav-link" href="#">5 Tools Everyone In The Design Industry</a><p>
+      </nav>
+    </div>
+  </div>
+
+  <% @posts.each_slice(3) do |group| %>
+    <div class = "row">
+      <% group.each do |post| %>
+          <!-- blog post -->
+          <div class = "blog-section col-xs-12 col-sm-12 col-md-4">
+            <!-- blog image -->
+            <!-- <img class = "blog-img" src="<%=post.image%>"> -->
+            <%= image_tag(post.image, class: "blog-img")  %>
+            <!-- heart -->
+            <div class = "heart">
+              <i class="fa fa-heart-o fa-2x" aria-hidden="true"></i>
+              <span class = "likes">367</span>
+            </div>
+            <!-- bookmark -->
+            <div class = "bookmark">
+              <i class="fa fa-bookmark-o fa-2x" aria-hidden="true"></i>
+            </div>
+            <div style="clear: both;"></div>
+            <!-- post title -->
+            <h3> <%= link_to post.title, post_path(post) %> </h3>
+            <!-- post body -->
+            <p> <%= post.body.split.first(50).join(" ") + "..." %> </p>
+            <!-- post author -->
+            <h5 class="author"> <%= post.author.name %> <h5>
+            <!-- post date -->
+            <h5> <%= post.created_at %> </h5>
+          </div>
+      <% end %>
+    </div>
+  <% end %>
+
+
+  <!-- row 4 -->
+  <div class="row4 hidden-xs hidden-sm">
+    <span class="more">More Articles</span>
+  </div>
+</div>

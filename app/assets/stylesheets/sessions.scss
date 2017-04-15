@@ -1,0 +1,28 @@
+// Place all the styles related to the Sessions controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.login-page {
+  display: block;
+  background-image: url("rokurinsha1.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  width:100vw;
+  height: 100vh;
+}
+
+.login-container {
+  width: 500px;
+  height: 300px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -190px;
+  margin-left: -250px;
+  padding: 30px;
+  padding-top: 10px;
+  background-color: whitesmoke;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px lightgrey;
+}

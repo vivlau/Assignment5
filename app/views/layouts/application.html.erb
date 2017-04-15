@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Awesome Answers</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag "application" %>
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" type="text/css">
+  </head>
+
+  <body>
+     <!-- Bootstrap JS CDN -->
+     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+     <!-- jQuery CDN -->
+     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+     <!-- Navigation Bar -->
+     <nav class="navbar navbar-fixed-top navbar-inverse">
+       <div class="container-fluid">
+         <!-- Brand and toggle get grouped for better mobile display -->
+         <div class="navbar-header">
+           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+             <span class="sr-only">Toggle navigation</span>
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+           </button>
+           <a class="navbar-brand" href="/">Brand</a>
+         </div>
+
+         <!-- Collect the nav links, forms, and other content for toggling -->
+         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+           <form class="navbar-form navbar-left">
+             <div class="input-group">
+               <span class="input-group-btn">
+                 <button class="btn" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+               </span>
+               <input type="text" class="form-control" placeholder="Search">
+             </div>
+             <div style="clear: both;"></div>
+           </form>
+           <ul class="nav navbar-nav">
+             <li><a href="#">About</a></li>
+             <li><a href="#">Contact</a></li>
+           </ul>
+           <ul class="nav navbar-nav">
+             <% if author_signed_in? %>
+                <li class = "bottom-nav"><h5 class = "greeting">Hello <%= current_author.name %> </h5><span class="signout-link"><%= link_to 'Sign Out', sessions_path, method: :delete, class:"signout-link" %></span></li>
+             <% else %>
+                <li><%= link_to 'Sign Up', new_author_path %></li>
+                <li><%= link_to 'Login', new_session_path %></li>
+             <% end %>
+           </ul>
+         </div><!-- /.navbar-collapse -->
+       </div><!-- /.container-fluid -->
+     </nav>
+
+footer -->
+<%= yield %>
+<footer class="footer">
+  <div class="foot container">
+    <!-- email -->
+    <div class = "email">
+      <i class="fa fa-envelope-o fa-2x" aria-hidden="true"></i>
+    </div>
+    <!-- facebook -->
+    <div class = "facebook">
+      <i class="fa fa-facebook fa-2x" aria-hidden="true"></i>
+    </div>
+    <!-- instagram -->
+    <div class = "instagram">
+      <i class="fa fa-instagram fa-2x" aria-hidden="true"></i>
+    </div>
+    <!-- medium -->
+    <div class = "medium">
+      <i class="fa fa-medium fa-2x" aria-hidden="true"></i>
+    </div>
+    <!-- twitter -->
+    <div class = "twitter">
+      <i class="fa fa-twitter fa-2x" aria-hidden="true"></i>
+    </div>
+  </div>
+</footer>
