@@ -1,15 +1,15 @@
 <div class = "signup-page">
+
   <div class ="signup-container">
 
     <h1 class = "post-title">Sign Up</h1>
 
-    <%= @author.errors.full_messages.join(', ') %>
-
     <div class = "post-body">
       <%= form_for @author do |f| %>
         <div class = "form-group">
-          <%= f.label :name %>
+          <%= f.label :name, class: 'control-label col-xs-1' %><span class="alerty alert-danger"><%= @author.errors.full_messages_for(:name)[0] %></span>
           <%= f.text_field :name, class: 'form-control' %>
+
         </div>
         <div class = "form-group">
           <%= f.label :about %>
@@ -20,11 +20,11 @@
           <%= f.file_field :avatar %>
         </div>
         <div class = "form-group">
-          <%= f.label :email %>
+          <%= f.label :email, class: 'control-label col-xs-1' %><span class="alerty alert-danger"><%= @author.errors.full_messages_for(:email)[0] %></span>
           <%= f.email_field :email, class: 'form-control' %>
         </div>
         <div class = "form-group">
-          <%= f.label :password %>
+          <%= f.label :password, class: 'control-label col-xs-2' %><span class="alerty alert-danger"><%= @author.errors.full_messages_for(:password)[0] %></span>
           <%= f.password_field :password, class: 'form-control' %>
         </div>
         <div class = "form-group">

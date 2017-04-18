@@ -10,12 +10,22 @@
   <div class = "row">
   <!-- main blog post -->
     <div class = "blog-section-main col-xs-12 col-sm-12 col-md-8">
+      <!-- edit and delete -->
+      <% if author_signed_in? %>
+        <% if Post.last.author_id == current_author.id %>
+        <div id = "author-only" class = "edit-delete">
+          This is your post, <%= current_author.name %>. You may choose to
+          <%= link_to "Edit", edit_post_path(Post.last) %> or
+          <%= link_to "Delete", post_path(Post.last), method: :delete, data: {confirm: "Are you sure?"} %>.
+        </div>
+        <% end %>
+      <% end %>
       <!-- blog image -->
       <%= image_tag(Post.last.image, class: "blog-img")  %>
         <!-- heart -->
         <div class = "heart">
           <i class="fa fa-heart-o fa-2x" aria-hidden="true"></i>
-          <span class = "likes">456</span>
+          <span class = "likes"><%= Post.last.likes %></span>
         </div>
         <!-- bookmark -->
         <div class = "bookmark">
@@ -49,18 +59,28 @@
     </div>
   </div>
 
-  <% @posts.each_slice(3) do |group| %>
+  <% @posts.where.not(id: Post.last.id).order(created_at: :desc).each_slice(3) do |row| %>
     <div class = "row">
-      <% group.each do |post| %>
+      <% row.each do |post| %>
           <!-- blog post -->
           <div class = "blog-section col-xs-12 col-sm-12 col-md-4">
             <!-- blog image -->
             <!-- <img class = "blog-img" src="<%=post.image%>"> -->
             <%= image_tag(post.image, class: "blog-img")  %>
+            <!-- edit and delete -->
+            <% if author_signed_in? %>
+              <% if post.author_id == current_author.id %>
+                <div id = "author-only" class = "edit-delete-list">
+                  This is your post, <%= current_author.name %>. You may choose to
+                  <%= link_to "Edit", edit_post_path(post) %> or
+                  <%= link_to "Delete", post_path(post), method: :delete, data: {confirm: "Are you sure?"} %>.
+                </div>
+              <% end %>
+            <% end %>
             <!-- heart -->
             <div class = "heart">
               <i class="fa fa-heart-o fa-2x" aria-hidden="true"></i>
-              <span class = "likes">367</span>
+              <span class = "likes"><%= post.likes %></span>
             </div>
             <!-- bookmark -->
             <div class = "bookmark">

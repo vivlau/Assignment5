@@ -1,7 +1,18 @@
 
 <div class = "post-container">
   <h1 class="post-title col-xs-12 col-sm-12 col-md-10 col-md-offset-1"><%= @post.title %></h1>
-  <%= image_tag(@post.image, class: "blog-img")  %>
+  <%= image_tag @post.image.url, :class => "blog-img"%>
+
+  <!-- edit and delete -->
+  <% if author_signed_in? %>
+    <% if @post.author_id == current_author.id %>
+    <div id = "author-only" class = "edit-delete-post">
+      This is your post, <%= current_author.name %>. You may choose to
+      <%= link_to "Edit", edit_post_path(@post) %> or
+      <%= link_to "Delete", post_path(@post), method: :delete, data: {confirm: "Are you sure?"} %>.
+    </div>
+    <% end %>
+  <% end %>
 
   <div class = "post-body">
     <div class = "post-text col-xs-12 col-sm-12 col-md-10 col-md-offset-1">
@@ -12,14 +23,16 @@
       <div style="clear: both;">
       <div class = "heart">
         <i class="fa fa-heart-o fa-2x" aria-hidden="true"></i>
-        <span class = "likes">367</span>
+        <span class = "likes"><%= @post.likes %></span>
       </div>
       <!-- bookmark -->
       <div class = "bookmark">
         <i class="fa fa-bookmark-o fa-2x" aria-hidden="true"></i>
       </div>
       <div style="clear: both;"></div>
+
     </div>
+
     <div class = "author-profile col-xs-12 col-sm-8 col-md-8 col-lg-6 col-xl-2">
       <%= image_tag @post.author.avatar.url, :class => "author-img"%>
       <div class = "blurb">
@@ -35,13 +48,18 @@
       <%= form_for([@post, @comment]) do |f| %>
         <h5>Leave a comment...</h5>
         <div class ="form-group comment-text">
-          <%= f.text_area :body %>
+          <%= f.text_area :body, :class => 'textarea_field' %>
         </div>
         <div class ="form-group comment-name">
-          <%= f.label :full_name %>
-          <%= f.text_field :name %>
+          <% if author_signed_in? %>
+            <%= f.label :full_name %>
+            <%= f.text_field :name, value: current_author.name, :readonly => true, :class => 'no_field' %>
+          <% else %>
+            <%= f.label :full_name %>
+            <%= f.text_field :name, :class => 'yes_field' %>
+          <% end %>
         </div>
-        <%= f.submit %>
+        <%= submit_tag 'Submit Comment', class: 'btn btn-primary' %>
       <% end %>
     </div>
 
@@ -54,12 +72,18 @@
 
       <div class = "comment">
         <p><%= comment.body %></p>
-        <p><%= comment.name %></p>
+        <p><h5><%= comment.name %></h4></p>
         <p><%= comment.created_at %></p>
 
-        <%= link_to 'Delete', [comment.post, comment],
-               method: :delete,
-               data: { confirm: 'Are you sure?' } %>
+        <% if author_signed_in? %>
+          <% if comment.name == current_author.name %>
+            <div id = "author-only" class = "edit-delete-comment">
+              This is your comment, <%= current_author.name %>. You may choose to
+              <%= link_to "Edit", [:edit_post, comment] %> or
+              <%= link_to "Delete", [comment.post, comment], method: :delete, data: {confirm: "Are you sure?"} %>.
+            </div>
+          <% end %>
+        <% end %>
       </div>
       <hr />
     <% end %>

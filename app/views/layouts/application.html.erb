@@ -48,7 +48,10 @@
            </ul>
            <ul class="nav navbar-nav">
              <% if author_signed_in? %>
-                <li class = "bottom-nav"><h5 class = "greeting">Hello <%= current_author.name %> </h5><span class="signout-link"><%= link_to 'Sign Out', sessions_path, method: :delete, class:"signout-link" %></span></li>
+                <li class = "bottom-nav"><h5 class = "greeting">Hello <%= current_author.name %> </h5>
+                <span class="signout-link"><%= link_to 'Sign Out', sessions_path, method: :delete, data: {confirm: 'Confirm Logout?'}, class:"signout-link" %></span></li>
+                <li><%= link_to 'My Posts', posts_path %></li>
+                <li><%= link_to 'Create New Post', new_post_path %></li>
              <% else %>
                 <li><%= link_to 'Sign Up', new_author_path %></li>
                 <li><%= link_to 'Login', new_session_path %></li>
@@ -58,7 +61,7 @@
        </div><!-- /.container-fluid -->
      </nav>
 
-footer -->
+<!-- footer -->
 <%= yield %>
 <footer class="footer">
   <div class="foot container">

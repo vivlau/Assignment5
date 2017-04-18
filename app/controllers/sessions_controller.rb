@@ -3,10 +3,11 @@ class SessionsController < ApplicationController
   end
 
   def create
-    author = Author.find_by_email params[:email]
-    if author&.authenticate(params[:password])
-      session[:author_id] = author.id
-      redirect_to root_path, notice: "Thank you for signing in"
+    @author = Author.find_by_email params[:email]
+    if @author && @author.authenticate(params[:password])
+      session[:author_id] = @author.id
+      flash[:notice] = "Thank you for signing in"
+      redirect_to root_path
     else
       flash.now[:danger] = "Invalid email/password combination!"
       render :new

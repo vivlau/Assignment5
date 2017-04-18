@@ -1,0 +1,17 @@
+<div class = "edit-comment-page">
+  <div class ="edit-comment-container">
+    <h1>Edit Comment</h1>
+    <br>
+    <%= form_for([@post, @comment]) do |f| %>
+      <div class ="form-group comment-text">
+        <%= f.text_area :body, :class => 'textarea_field' %>
+      </div>
+      <div class ="form-group comment-name">
+        <%= f.label :full_name %>
+        <%= current_author.name %>
+        <%= f.hidden_field :name, value: current_author.name, :readonly => true, :class => 'no_field' %>
+      </div>
+      <%= submit_tag 'Update Comment', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>

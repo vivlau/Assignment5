@@ -1,0 +1,47 @@
+<div class="body container-fluid">
+  <h1 class = "mypost">My Posts</h1>
+
+  <% if @posts.where(author_id: current_author.id).exists? %>
+    <% @posts.where(author_id: current_author.id).order(created_at: :desc).each_slice(3) do |row| %>
+      <div class = "row">
+        <% row.each do |post| %>
+            <!-- blog post -->
+            <div class = "blog-section col-xs-12 col-sm-12 col-md-4">
+              <!-- blog image -->
+              <!-- <img class = "blog-img" src="<%=post.image%>"> -->
+              <%= image_tag(post.image, class: "blog-img")  %>
+              <!-- heart -->
+              <div class = "heart">
+                <i class="fa fa-heart-o fa-2x" aria-hidden="true"></i>
+                <span class = "likes"><%= post.likes %></span>
+              </div>
+              <!-- bookmark -->
+              <div class = "bookmark">
+                <i class="fa fa-bookmark-o fa-2x" aria-hidden="true"></i>
+              </div>
+              <div style="clear: both;"></div>
+              <!-- post title -->
+              <h3> <%= link_to post.title, post_path(post) %> </h3>
+              <!-- post body -->
+              <p> <%= post.body.split.first(50).join(" ") + "..." %> </p>
+              <!-- post author -->
+              <h5 class="author"> <%= post.author.name %> <h5>
+              <!-- post date -->
+              <h5> <%= post.created_at %> </h5>
+              <!-- edit and delete -->
+              <% if author_signed_in? %>
+                <% if post.author.id == current_author.id %>
+                  <%= link_to "Edit", edit_post_path(post) %>
+                <% end %>
+              <% end %>
+            </div>
+        <% end %>
+      </div>
+    <% end %>
+  <% else %>
+    <br>
+    <div class="alert alert-danger">
+      You haven't written any posts yet! <%= link_to 'Create a New Post', new_post_path %> to get started.
+    </div>
+  <% end %>
+</div>

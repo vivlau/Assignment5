@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
   get 'blog/index'
 
-
   resources :posts do
     resources :comments
+    member do
+      get 'like'
+      get 'unlike'
+     end
   end
 
   resources :sessions, only: [:new, :create] do
